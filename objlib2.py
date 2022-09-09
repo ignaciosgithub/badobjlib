@@ -1,3 +1,4 @@
+#Created by Ignacio Alfredo Savi Gualco, not responsable for misuse, no guarantee of proper functioning. Use at your own risk, no fees or credits required to use this lib.
 import math,struct
 class Mesh: 
  def __init__(self, filename, from_memory = False): 
