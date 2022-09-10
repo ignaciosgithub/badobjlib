@@ -31,6 +31,25 @@ class Mesh:
   self.vertices = vertices
   if len(faces) * len(vertices)>0:
    self.empty = False
+ def write_to_disk(self,filename):
+
+  with open(filename,'w') as f:
+   if not self.from_memory:
+
+    for vertex in self.vertices:
+     f.write('v '+str(vertex.x)+" "+str(vertex.y)+" "+str(vertex.z)+"\n")
+    
+    for face in self.faces:
+     
+     f.write('f '+str(face.v1)+" "+str(face.v2)+" "+str(face.v3)+"\n")#str(self.vertices.index(face.v3)+1))
+   else:
+    for vertex in self.vertices:
+     f.write('v '+str(vertex.x)+" "+str(vertex.y)+" "+str(vertex.z)+"\n")        
+    for face in self.faces:
+     try:
+      f.write('f '+str(self.vertices.index(face.v1)+1)+" "+str(self.vertices.index(face.v2)+1)+" "+str(self.vertices.index(face.v3)+1)+"\n")#str())
+     except:
+      f.write('f '+str(face.v1)+" "+str(face.v2)+" "+str(face.v3)+"\n")
 class Vertex: 
  def __init__(self, x, y, z):
   self.x = x 
