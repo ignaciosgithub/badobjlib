@@ -112,6 +112,24 @@ class Face:
   self.v3 = v3 
  def __repr__(self): 
   return "Face({}, {}, {})".format(self.v1, self.v2, self.v3)
+ def tarea_foreignsq(self,vertex1,vertex2,vertex3):
+  v1 = vertex1
+  v2 = vertex2
+  v3 = vertex3
+  return (((v2.x-v1.x)*(v3.y-v1.y)-(v2.y-v1.y)*(v3.x-v1.x))**2+((v2.x-v1.x)*(v3.z-v1.z)-(v2.z-v1.z)*(v3.x-v1.x))**2+((v2.y-v1.y)*(v3.z-v1.z)-(v2.z-v1.z)*(v3.y-v1.y))**2) 
+ 
+ def tareasq(self):
+  v1 = self.v1
+  v2 = self.v2
+  v3 = self.v3
+  return (((v2.x-v1.x)*(v3.y-v1.y)-(v2.y-v1.y)*(v3.x-v1.x))**2+((v2.x-v1.x)*(v3.z-v1.z)-(v2.z-v1.z)*(v3.x-v1.x))**2+((v2.y-v1.y)*(v3.z-v1.z)-(v2.z-v1.z)*(v3.y-v1.y))**2)
+
+ def area_foreign(self,vertex1,vertex2,vertex3):
+  v1 = vertex1
+  v2 = vertex2
+  v3 = vertex3
+  return 0.5*math.sqrt(((v2.x-v1.x)*(v3.y-v1.y)-(v2.y-v1.y)*(v3.x-v1.x))**2+((v2.x-v1.x)*(v3.z-v1.z)-(v2.z-v1.z)*(v3.x-v1.x))**2+((v2.y-v1.y)*(v3.z-v1.z)-(v2.z-v1.z)*(v3.y-v1.y))**2) 
+ 
  def area(self):
   v1 = self.v1
   v2 = self.v2
@@ -130,7 +148,13 @@ class Face:
     
   y = y * (threehalfs - (x2 * y * y))  # Newton's method
   return y
-  
+ def inside(self, vertex):
+  if self.area() == self.area_foreign(self.v1,self.v2,vertex) +self.area_foreign(vertex,self.v2,self.v3)+self.area_foreign(self.v1,vertex,self.v3) :
+   return True
+  return False
+
+
+ 
  def fast_aproximate_area(self):
   try:
    v1 = self.v1
@@ -144,7 +168,7 @@ class Face:
   v1 = self.v1
   v2 = self.v2
   v3 = self.v3
-  return Vertex(((self.area()/3)*(((self.area()/3)+((self.area()/3)+((self.area()/3)+0))))), ((self.area()/3)*(((self.area()/3)+((self.area()/3)+((self.area()/3)+0))))), ((self.area()/3)*(((self.area()/3)+((self.area()/3)+((self.area()/3)+0))))))
+  return Vertex((v1.x + v2.x + v3.x) / 3, (v1.y + v2.y + v3.y) / 3,(v1.z + v2.z + v3.z) / 3)
  def bigger_than(self,face):
   v1 = self.v1
   v2 = self.v2
